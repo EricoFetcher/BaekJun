@@ -1,11 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int data_set, calNum = 0;
+int data_set = 0;
 int curNum = 1;
+int lastNum = 0;
 int *N, *T, *B, *S = NULL;
 int ***Line_OrdArr, **cnt = NULL;
+int endFlag = 0;
     
+#define pBox (B + D_Set_Num)
+#define pType (T + D_Set_Num)
+#define pPeopleNum (N + D_Set_Num)
+#define MaxRow (*pBox * *pType / *pPeopleNum + 1)
+#define pSupply (S + D_Set_Num)
+
 void doFree(void);
 
 void makeArray(void);
@@ -15,8 +23,9 @@ void countSuppliy(void);
 int main()
 {
 
-
-    scanf("%d", &data_set);
+    printf("%d\n", curNum);
+    //scanf("%d", &data_set);
+    data_set = 1;
 
     N = (int *)malloc(data_set*sizeof(int));
     T = (int *)malloc(data_set*sizeof(int));
@@ -29,7 +38,7 @@ int main()
 
     countSuppliy();    
     
-   // printf("%d", cnt[0][0]);
+    printf("cnt: %d\n", cnt[0][0]);
     doFree();
 
     return 0;
@@ -42,25 +51,37 @@ void doFree(void)
     free(B);
     free(S);
     
-    for (int x = 0; x < )
+    for (int D_Set_Num = 0; D_Set_Num < data_set; D_Set_Num++)
+    {
+        for(int Column = 0; Column < *pPeopleNum; Column ++)
+        {
+            free(Line_OrdArr[D_Set_Num][Column]);
+        }
+    }
+
+    for (int D_Set_Num = 0; D_Set_Num < data_set; D_Set_Num++)
+    {
+        free (Line_OrdArr[D_Set_Num]);
+        free (cnt[D_Set_Num]);
+    }
+
+    free(Line_OrdArr);
+    free (cnt);
 }
 
 void countSuppliy(void)
 {
     for(int D_Set_Num = 0; D_Set_Num < data_set; D_Set_Num++)
     {
-        for(int Column = 0; Column < *( N + D_Set_Num); Column ++)
+        for(int Column = 0; Column < *pPeopleNum; Column ++)
         {
-            for(int Row = 0; Row < *(B + D_Set_Num) * *(T + D_Set_Num) / *(N + D_Set_Num); Row++)
+            for(int Row = 0; Row < MaxRow; Row++)
             {
-               // printf("%d\n", Line_OrdArr[D_Set_Num][Column][Row]);
-                
-                #if 0
-                if(Line_OrdArr[D_Set_Num][Column][Row] == *(S + D_Set_Num))
+                if (Line_OrdArr[D_Set_Num][Row][Column] == *pSupply)
+                {
                     cnt[D_Set_Num][Column]++;
-                #endif
+                }
             }
-           // printf("---\n");
         }
     }
 }
@@ -69,37 +90,47 @@ void makeArray(void)
 {
     for(int D_Set_Num = 0; D_Set_Num < data_set; D_Set_Num++)
     {
-        scanf("%d %d %d %d", (N + D_Set_Num), (T + D_Set_Num), (B + D_Set_Num), (S + D_Set_Num));
+        //scanf("%d %d %d %d", (N + D_Set_Num), pType, pBox, (S + D_Set_Num));
+        *N = 4;
+        *T = 3;
+        *B = 6;
+        *S = 1;
+        Line_OrdArr[D_Set_Num] = (int**)malloc(MaxRow * sizeof(int));
+        cnt[D_Set_Num] = (int*)malloc(*pPeopleNum * sizeof(int));
 
-        Line_OrdArr[D_Set_Num] = (int**)malloc(*(N + D_Set_Num)*sizeof(int));
-        cnt = (int*)malloc(*(N + D_Set_Num)*sizeof(int));
-
-        //라인 순번
-        for (int Column = 0; Column < *( N + D_Set_Num); Column ++)
+        for (int Row = 0; Row < MaxRow; Row++)
         {
-            Line_OrdArr[D_Set_Num][Column] = 
-                        (int*)malloc( *(B + D_Set_Num) * *(T + D_Set_Num) / *(N + D_Set_Num));
+             Line_OrdArr[D_Set_Num][Row] = 
+                        (int*)malloc( *pPeopleNum * sizeof(int));
 
-            calNum = curNum = Column + 1;
-
-            for (int Row = 0; Row < *(B + D_Set_Num) * *(T + D_Set_Num) / *(N + D_Set_Num); Row++)
+            for(int Column = 0; Column < *pPeopleNum; Column++)
             {
-                printf("%d\n", curNum + *(N + D_Set_Num) - *(T + D_Set_Num));
-                if (curNum + *(N + D_Set_Num) - *(T + D_Set_Num) > 0)
+                if(!endFlag)
                 {
-                    while (calNum < *(N + D_Set_Num))
-                        calNum -= *(T + D_Set_Num);
-                        
-                        calNum < 0 ? -calNum : calNum;
+                    if(curNum > *pType)
+                    {
+                        curNum = 1;
+                        lastNum++;
+                    }
+                    else;
+                    printf("lastNum: %d\n", lastNum);
+                    
+                    if(lastNum < *pBox)
+                    {
+                        Line_OrdArr[D_Set_Num][Row][Column] = curNum;
+                        printf("Row: %d, Column: %d, curNum: %d \n", Row, Column, curNum);
+                        curNum++;
+                    }
+                    else
+                    {
+                        curNum = 1;
+                        lastNum = 1;
+
+                        endFlag = 1;
+                    }
                 }
-                else
-                {
-                    calNum = *(N + D_Set_Num);
-                }
-                Line_OrdArr[D_Set_Num][Column][Row] = calNum;
-                printf("%d\n", )
-                curNum = calNum;
-            }          
-        }   
-    }    
+            }
+            endFlag = 0;
+        }
+    }
 }
