@@ -5,7 +5,8 @@ int data_set = 0;
 int curNum = 1;
 int lastNum = 0;
 int *N, *T, *B, *S = NULL;
-int ***Line_OrdArr, **cnt = NULL;
+int ***Line_OrdArr = NULL; 
+int **cnt = NULL;
 int endFlag = 0;
     
 #define pBox (B + D_Set_Num)
@@ -31,8 +32,8 @@ int main()
     T = (int *)malloc(data_set*sizeof(int));
     B = (int *)malloc(data_set*sizeof(int));
     S = (int *)malloc(data_set*sizeof(int));
-    Line_OrdArr = (int ***)malloc(data_set*sizeof(int));
-    cnt = (int **)malloc(data_set*sizeof(int));
+    Line_OrdArr = (int ***)malloc(data_set*sizeof(int **));
+    cnt = (int **)malloc(data_set*sizeof(int *));
 
     makeArray();
 
@@ -95,7 +96,7 @@ void makeArray(void)
         *T = 3;
         *B = 6;
         *S = 1;
-        Line_OrdArr[D_Set_Num] = (int**)malloc(MaxRow * sizeof(int));
+        Line_OrdArr[D_Set_Num] = (int**)malloc(MaxRow * sizeof(int *));
         cnt[D_Set_Num] = (int*)malloc(*pPeopleNum * sizeof(int));
 
         for (int Row = 0; Row < MaxRow; Row++)
