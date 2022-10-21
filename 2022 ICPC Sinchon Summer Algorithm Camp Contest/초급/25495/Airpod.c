@@ -11,12 +11,12 @@ int *phoneNumber = NULL;
 int batteryUsageinPercentage = 0;
 int prevusageinPercentage = 0;
 
+void newConnection(void);
+
 int main()
 {
     scanf("%d", &num_Connection);
     phoneNumber = (int *)malloc(num_Connection * sizeof(int *));
-    
-    
     
     for(trial = 0; trial < num_Connection ; trial++ )
     {
@@ -26,24 +26,18 @@ int main()
         {
             batteryUsageinPercentage += 2;
             prevusageinPercentage = 2;
-            
-            if(batteryUsageinPercentage >= 100)
-            {
-                batteryUsageinPercentage = 0;                
-            }
-            
-            currentConnection = *(phoneNumber + trial);
         }
         else if(reConnection)
         {
             batteryUsageinPercentage += prevusageinPercentage * 2;
             prevusageinPercentage *= 2;
-            if (batteryUsageinPercentage >= 100)
-            {
-                batteryUsageinPercentage = 0;
-                currentConnection = 0;
-            }
         }
+        
+        currentConnection = *(phoneNumber + trial);
+
+        newConnection();
+
+        else;
         
     }
     
@@ -51,5 +45,16 @@ int main()
     
     free(phoneNumber);
     return 0;
+}
+
+void newConnection(void)
+{
+    if (batteryUsageinPercentage >= 100)
+    {
+        batteryUsageinPercentage = 0;
+        currentConnection = 0;
+        prevusageinPercentage = 0;
+    }
+    else;
 }
 
