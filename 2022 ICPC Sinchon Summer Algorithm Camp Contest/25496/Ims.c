@@ -1,32 +1,69 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int accumulatedTiredness = 0;
-int num_accessories = 0;
-int *tiredness = NULL;
+
 
 int main()
 {
+    int accumulatedTiredness = 0;
+    int num_accessories = 0;
+    int maxNum_acces = 0;
+    int counting[201] = {0};
+    int max = 0;
+    int tiredness = 0;
+    int endflag = 0;
+    
     scanf("%d %d", &accumulatedTiredness, &num_accessories);
-    tiredness = (int *)malloc(num_accessories * sizeof(int *));
 
-    for(int input_tiredness = 0; input_tiredness < num_accessories; input_tiredness++)
+    for(int num = 0; num < num_accessories; num++)
     {
-        scanf("%d", tiredness + input_tiredness);
+        scanf("%d", &tiredness);
+        counting[tiredness]++;
+        
+        if(tiredness > max)
+        {
+            max = tiredness;
+        }
     }
 
-    
+    if(accumulatedTiredness == 200)
+    {
+        printf("0");
+        endflag = 1;
+    }
 
-    free(tiredness);
+    for(tiredness = 0; tiredness < max + 1; tiredness++)
+    {
+        if(counting[tiredness] != 0)
+        {
+            for(int i = 0; i < counting[tiredness]; i++)
+            {
+                if(!endflag)
+                {
+                    accumulatedTiredness += tiredness;
+                    maxNum_acces++;
+                    
+                    //printf("tiredness: %d, acc: %d\n", tiredness, accumulatedTiredness);
+                    
+                    if (accumulatedTiredness >= 200)
+                    {
+                        printf("%d", maxNum_acces);
+                        endflag = 1;
+                    }
+                }
+                else;
+                
+                
+                
+            }
+
+        }
+    }
+
+    if(!endflag)
+    {
+        printf("%d", maxNum_acces);
+    }
+
     return 0;
-}
-
-void makeOrder()
-{
-    
-}
-
-void createAccessories(int * givenTiredness)
-{
-    accumulatedTiredness += *givenTiredness; 
 }

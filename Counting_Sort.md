@@ -10,7 +10,7 @@ for(int a = 0; a <num; a++)
     {
         max = numbers;
     }
-    countings[numbers - 1]++;
+    countings[numbers]++;
 }
 
 for(int a = 0; a < max; a++)
