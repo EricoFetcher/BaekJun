@@ -13,8 +13,9 @@ int main()
     for(int input_tiredness = 0; input_tiredness < num_accessories; input_tiredness++)
     {
         scanf("%d", tiredness + input_tiredness);
-
     }
+
+    
 
     free(tiredness);
     return 0;
