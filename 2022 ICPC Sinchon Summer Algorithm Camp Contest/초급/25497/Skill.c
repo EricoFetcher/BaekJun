@@ -15,60 +15,48 @@ int main()
 
     for (int usage = 0; usage < num_SkillUsage; usage++ )
     {
-        scanf("%c", &skillOrder);
+        scanf(" %c", &skillOrder);
         if (!errorFlag)
         {
             if (skillOrder == 'L')
             {
-                printf("L\n");
-                LFlag = 1;
-                skillTotalUsage++;
+                LFlag++;
             }
             else if (skillOrder == 'S')
             {
-                printf("S\n");
-                SFlag = 1;
-                skillTotalUsage++;
+                SFlag++;
             }
             else if (skillOrder == 'K')
             {
-                printf("K\n");
                 if(!SFlag)
                 {
                     errorFlag = 1;
                 }
                 else
                 {
-                    SFlag = 0;
-                    skillTotalUsage--;
+                    SFlag--;
+                    skillTotalUsage++;
                 }
             }
             else if (skillOrder == 'R')
             {
-                printf("R\n");
                 if(!LFlag)
                 {
                     errorFlag = 1;
                 }
                 else
                 {
-                    LFlag = 0;
-                    skillTotalUsage--;
+                    LFlag--;
+                    skillTotalUsage++;
                 }
-
             }
             else
             {
-                printf("N\n");
                 skillTotalUsage++;
             }
         }
         else;
-        
-
     }
-
     printf("%d", skillTotalUsage);
-
     return 0;
 }
