@@ -22,10 +22,12 @@ int main()
         pSizeofToyinOrder[toySize]++;
         
         // 2 가 2개인지 3개인지 확인
-        if(maxToyNum < toySize)
+        if(maxToyNum < pSizeofToyinOrder[toySize])
         {
-            maxToyNum = toySize;
+            maxToyNum = pSizeofToyinOrder[toySize];
         }
+        
+        printf("%d\n", maxToyNum);
         
         if(maxSize < toySize)
         {
